@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="寺井雅人">
+<meta name="description" content="キソケン特別会">
+
+<title>データ分析から報告書まで：R Markdown講座</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Kisoken_Rmd_202503_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Kisoken_Rmd_202503_files/libs/quarto-html/quarto.js"></script>
+<script src="Kisoken_Rmd_202503_files/libs/quarto-html/popper.min.js"></script>
+<script src="Kisoken_Rmd_202503_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Kisoken_Rmd_202503_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Kisoken_Rmd_202503_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Kisoken_Rmd_202503_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Kisoken_Rmd_202503_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Kisoken_Rmd_202503_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Kisoken_Rmd_202503_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">データ分析から報告書まで：R Markdown講座</h1>
+                  <div>
+        <div class="description">
+          キソケン特別会
+        </div>
+      </div>
+                </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">寺井雅人 </p>
+    </div>
+      <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              愛知工科大学
+            </p>
+        </div>
+      </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">14-05-2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Summary</h2>
+   
+  <ul>
+  <li><a href="#自己紹介" id="toc-自己紹介" class="nav-link active" data-scroll-target="#自己紹介">自己紹介</a>
+  <ul class="collapse">
+  <li><a href="#寺井-雅人masato-terai" id="toc-寺井-雅人masato-terai" class="nav-link" data-scroll-target="#寺井-雅人masato-terai">寺井 雅人（Masato Terai）</a></li>
+  </ul></li>
+  <li><a href="#はじめに" id="toc-はじめに" class="nav-link" data-scroll-target="#はじめに">はじめに</a>
+  <ul class="collapse">
+  <li><a href="#研究成果や研究資料の公開共有の必要性" id="toc-研究成果や研究資料の公開共有の必要性" class="nav-link" data-scroll-target="#研究成果や研究資料の公開共有の必要性">研究成果や研究資料の公開・共有の必要性</a>
+  <ul class="collapse">
+  <li><a href="#再現可能な研究のために研究に使用したマテリアルの提出を推奨" id="toc-再現可能な研究のために研究に使用したマテリアルの提出を推奨" class="nav-link" data-scroll-target="#再現可能な研究のために研究に使用したマテリアルの提出を推奨">再現可能な研究のために、研究に使用したマテリアルの提出を推奨</a></li>
+  </ul></li>
+  <li><a href="#rで分析を行う場合r-markdownが一番便利" id="toc-rで分析を行う場合r-markdownが一番便利" class="nav-link" data-scroll-target="#rで分析を行う場合r-markdownが一番便利">Rで分析を行う場合、R Markdownが一番便利</a></li>
+  </ul></li>
+  <li><a href="#本日の目標" id="toc-本日の目標" class="nav-link" data-scroll-target="#本日の目標">本日の目標</a></li>
+  <li><a href="#r-markdownを使って分析結果をまとめることができる" id="toc-r-markdownを使って分析結果をまとめることができる" class="nav-link" data-scroll-target="#r-markdownを使って分析結果をまとめることができる">1. R Markdownを使って分析結果をまとめることができる</a>
+  <ul class="collapse">
+  <li><a href="#r-markdownの解体新書" id="toc-r-markdownの解体新書" class="nav-link" data-scroll-target="#r-markdownの解体新書">R Markdownの解体新書</a>
+  <ul class="collapse">
+  <li><a href="#knitを押して出力" id="toc-knitを押して出力" class="nav-link" data-scroll-target="#knitを押して出力">Knit🧶を押して出力！</a></li>
+  </ul></li>
+  <li><a href="#ドキュメントチャンクmarkdown記法wordの部分" id="toc-ドキュメントチャンクmarkdown記法wordの部分" class="nav-link" data-scroll-target="#ドキュメントチャンクmarkdown記法wordの部分">ドキュメントチャンク：Markdown記法（Wordの部分）</a>
+  <ul class="collapse">
+  <li><a href="#lets-実践" id="toc-lets-実践" class="nav-link" data-scroll-target="#lets-実践">Let’s 実践</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#名古屋飯といえば" id="toc-名古屋飯といえば" class="nav-link" data-scroll-target="#名古屋飯といえば">名古屋飯といえば</a>
+  <ul class="collapse">
+  <li><a href="#ひつまぶしhitsumabushi" id="toc-ひつまぶしhitsumabushi" class="nav-link" data-scroll-target="#ひつまぶしhitsumabushi">ひつまぶし：<em>Hitsumabushi</em></a></li>
+  </ul></li>
+  <li><a href="#答え合わせ" id="toc-答え合わせ" class="nav-link" data-scroll-target="#答え合わせ">答え合わせ</a></li>
+  <li><a href="#実はwordのように編集できます" id="toc-実はwordのように編集できます" class="nav-link" data-scroll-target="#実はwordのように編集できます">実は、Wordのように編集できます！</a></li>
+  <li><a href="#コードチャンクの挿入rの部分" id="toc-コードチャンクの挿入rの部分" class="nav-link" data-scroll-target="#コードチャンクの挿入rの部分">コードチャンクの挿入（Rの部分）</a>
+  <ul class="collapse">
+  <li><a href="#lets-実践-1" id="toc-lets-実践-1" class="nav-link" data-scroll-target="#lets-実践-1">Let’s 実践</a></li>
+  </ul></li>
+  <li><a href="#食費の合計" id="toc-食費の合計" class="nav-link" data-scroll-target="#食費の合計">食費の合計</a></li>
+  <li><a href="#答え合わせ-1" id="toc-答え合わせ-1" class="nav-link" data-scroll-target="#答え合わせ-1">答え合わせ</a></li>
+  <li><a href="#r-markdownでまとめた結果を共有することができる" id="toc-r-markdownでまとめた結果を共有することができる" class="nav-link" data-scroll-target="#r-markdownでまとめた結果を共有することができる">2. R Markdownでまとめた結果を共有することができる</a>
+  <ul class="collapse">
+  <li><a href="#lets-実践一緒に" id="toc-lets-実践一緒に" class="nav-link" data-scroll-target="#lets-実践一緒に">Let’s 実践（一緒に）</a>
+  <ul class="collapse">
+  <li><a href="#wordに出力" id="toc-wordに出力" class="nav-link" data-scroll-target="#wordに出力">Wordに出力</a></li>
+  <li><a href="#before" id="toc-before" class="nav-link" data-scroll-target="#before">Before</a></li>
+  <li><a href="#after" id="toc-after" class="nav-link" data-scroll-target="#after">After</a></li>
+  <li><a href="#power-pointに出力" id="toc-power-pointに出力" class="nav-link" data-scroll-target="#power-pointに出力">Power Pointに出力</a></li>
+  <li><a href="#html-slideに変更" id="toc-html-slideに変更" class="nav-link" data-scroll-target="#html-slideに変更">HTML slideに変更</a></li>
+  </ul></li>
+  <li><a href="#html形式だと簡単にウェブサイトにできます" id="toc-html形式だと簡単にウェブサイトにできます" class="nav-link" data-scroll-target="#html形式だと簡単にウェブサイトにできます">HTML形式だと、簡単にウェブサイトにできます</a>
+  <ul class="collapse">
+  <li><a href="#rpubsを使う" id="toc-rpubsを使う" class="nav-link" data-scroll-target="#rpubsを使う">RPubsを使う</a></li>
+  <li><a href="#githubを使う" id="toc-githubを使う" class="nav-link" data-scroll-target="#githubを使う">Githubを使う</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#おまけ" id="toc-おまけ" class="nav-link" data-scroll-target="#おまけ">おまけ</a>
+  <ul class="collapse">
+  <li><a href="#r-markdownに含めておくとよい情報" id="toc-r-markdownに含めておくとよい情報" class="nav-link" data-scroll-target="#r-markdownに含めておくとよい情報">R Markdownに含めておくとよい情報</a>
+  <ul class="collapse">
+  <li><a href="#rのバージョン-使用したrのパッケージのバージョン" id="toc-rのバージョン-使用したrのパッケージのバージョン" class="nav-link" data-scroll-target="#rのバージョン-使用したrのパッケージのバージョン">Rのバージョン &amp; 使用したRのパッケージのバージョン</a></li>
+  <li><a href="#日付日時" id="toc-日付日時" class="nav-link" data-scroll-target="#日付日時">日付、日時</a></li>
+  <li><a href="#処理にかかった時間" id="toc-処理にかかった時間" class="nav-link" data-scroll-target="#処理にかかった時間">処理にかかった時間</a></li>
+  <li><a href="#パソコンの性能など" id="toc-パソコンの性能など" class="nav-link" data-scroll-target="#パソコンの性能など">パソコンの性能など</a></li>
+  </ul></li>
+  <li><a href="#プログラム言語は無料の有益な情報が沢山あります" id="toc-プログラム言語は無料の有益な情報が沢山あります" class="nav-link" data-scroll-target="#プログラム言語は無料の有益な情報が沢山あります">プログラム言語は無料の有益な情報が沢山あります</a></li>
+  </ul></li>
+  <li><a href="#参考文献-資料" id="toc-参考文献-資料" class="nav-link" data-scroll-target="#参考文献-資料">参考文献 &amp; 資料</a>
+  <ul class="collapse">
+  <li><a href="#書籍ウェブサイトの記事" id="toc-書籍ウェブサイトの記事" class="nav-link" data-scroll-target="#書籍ウェブサイトの記事">📚：書籍、💻：ウェブサイトの記事</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<style>
+
+/* Whole document */
+body {
+  font-family: Helvetica;
+  font-size: 16pt;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+  font-size: 24pt;
+}
+
+.infobox {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  border: 2px solid orange;
+  border-radius: 10px;
+  background: #f5f5f5 5px center/3em no-repeat;
+
+}
+
+.beg {
+  background-image: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjHtu3kBX8P39WYBBAjar9c8c1ladK2SYL6_gEMXFweQfauWVhSvCQP5KELsPX5KNL1uOddLLQ-aeMxv904OW_NFFfANhBYObfBV09KO2EXehrb9kMdCLZY1afsChib-7zIkBJbG6OrbJpM/s400/aisatsu_kodomo_boy.png");}
+
+.caution {
+  background-image: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhzMqkpQ7vLUKvumbm6AFwTLQiCe7tlDb2Q0MAiISLsesZHnhj0kbRjB4U3se3UrDIHfIy0hlahyphenhyphenQu-V2tOR2LcV_lX7U8P5a8jtqPYv3Ah4L-JoYi8PhoaoehumGIdp2vrsX0rRyhXqwA/s800/mark_chuui.png");}
+  
+</style>
+<div class="infobox beg">
+<p><strong>お願い</strong></p>
+<p>・ハンズオン形式なので、手元にR Studioをご準備ください！<br> ・どのタイミングでも質問していただいてOKです！</p>
+</div>
+<section id="自己紹介" class="level1">
+<h1>自己紹介</h1>
+<section id="寺井-雅人masato-terai" class="level2">
+<h2 class="anchored" data-anchor-id="寺井-雅人masato-terai">寺井 雅人（Masato Terai）</h2>
+<ul>
+<li>研究：第二言語習得の語彙、知識の身体性</li>
+<li>R(Studio)歴：2018年～現在に至る</li>
+<li>Gmail: <a href="mailto:terai.research@gmail.com" class="email">terai.research@gmail.com</a></li>
+<li>X（旧Twitter）: <a href="https://twitter.com/uniquefreshman">@uniquefreshman</a></li>
+<li>プログラミング記事：<a href="https://qiita.com/masato-terai">Qiita</a></li>
+</ul>
+</section>
+</section>
+<section id="はじめに" class="level1">
+<h1>はじめに</h1>
+<section id="研究成果や研究資料の公開共有の必要性" class="level2">
+<h2 class="anchored" data-anchor-id="研究成果や研究資料の公開共有の必要性">研究成果や研究資料の公開・共有の必要性</h2>
+<section id="再現可能な研究のために研究に使用したマテリアルの提出を推奨" class="level3">
+<h3 class="anchored" data-anchor-id="再現可能な研究のために研究に使用したマテリアルの提出を推奨">再現可能な研究のために、研究に使用したマテリアルの提出を推奨</h3>
+<ul>
+<li><p>e.g., 実験で使用した刺激文、分析に使用した生データ、分析コード</p></li>
+<li><p><a href="https://onlinelibrary.wiley.com/page/journal/14679922/homepage/ForAuthors.html#badgel">Language LearningのHPより</a></p></li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>Shared Research Materials and Data Policy for Accepted Articles.</strong> <mark style="background-color: orange;"><em>Language Learning</em> encourages accepted authors to upload their data collection materials and/or data to the IRIS database (<a href="http://www.iris-database.org" class="uri">http://www.iris-database.org</a>).</mark> IRIS is an online repository for data collection materials used for second language research. This includes data elicitation instruments such as <mark style="background-color: orange;">interview and observation schedules, language tests, pictures, questionnaires, software scripts, URL links, word lists, pedagogical interventions, and so on.</mark> (…) The sharing of research instrumentation benefits the research community and helps authors and journals increase the visibility of their published research.</p>
+</blockquote>
+</section>
+</section>
+<section id="rで分析を行う場合r-markdownが一番便利" class="level2">
+<h2 class="anchored" data-anchor-id="rで分析を行う場合r-markdownが一番便利">Rで分析を行う場合、R Markdownが一番便利</h2>
+<ul>
+<li><p>RとWordが合体したようなもの</p></li>
+<li><p>様々な媒体に<strong>簡単に</strong>出力できる</p>
+<ul>
+<li>HTML、Word、Power Pointなどなど</li>
+<li><a href="https://vimeo.com/178485416">例(1:00のあたり)</a></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="本日の目標" class="level1">
+<h1>本日の目標</h1>
+<ol type="1">
+<li><p>R Markdownを使って分析結果をまとめることができる</p>
+<ul>
+<li>Markdown記法の基礎の基礎</li>
+</ul></li>
+<li><p>R Markdownでまとめた結果を、様々なフォーマットで共有できる</p>
+<ul>
+<li>HTML、Word、Power Point形式での出力</li>
+<li>RPubs、 Githubなどで公開</li>
+</ul></li>
+</ol>
+<ul>
+<li>＋おまけ.</li>
+</ul>
+</section>
+<section id="r-markdownを使って分析結果をまとめることができる" class="level1">
+<h1>1. R Markdownを使って分析結果をまとめることができる</h1>
+<section id="r-markdownの解体新書" class="level2">
+<h2 class="anchored" data-anchor-id="r-markdownの解体新書">R Markdownの解体新書</h2>
+<ul>
+<li><p>【パーツ１】YAML（YAML　Ain’t Markup Language）ヘッダー：文章全体の体裁や情報を操作する</p>
+<ul>
+<li>タイトル、サブタイトル</li>
+<li>作成者</li>
+<li>作成した日時、更新日時も設定可能</li>
+<li>どのような形式で作成するか</li>
+</ul></li>
+<li><p>【パーツ２】コードチャンク：Rのコードを記述するところ</p></li>
+<li><p>【パーツ３】ドキュメントチャンク：<a href="https://www.jaysong.net/RBook/rmarkdown.html#rmarkdown-intro">Markdownと呼ばれるプログラム言語</a>で記述するところ</p>
+<ul>
+<li>見出し、表、箇条書き、強調、斜体など、Wordのリボン部分にある機能をMarkdownで書く</li>
+</ul></li>
+</ul>
+<section id="knitを押して出力" class="level3">
+<h3 class="anchored" data-anchor-id="knitを押して出力">Knit🧶を押して出力！</h3>
+<ul>
+<li>初期設定はHTMLファイル出力です</li>
+</ul>
+</section>
+</section>
+<section id="ドキュメントチャンクmarkdown記法wordの部分" class="level2">
+<h2 class="anchored" data-anchor-id="ドキュメントチャンクmarkdown記法wordの部分">ドキュメントチャンク：Markdown記法（Wordの部分）</h2>
+<div class="infobox">
+<ul>
+<li><p>覚えるのはマストではないです。その都度調べて使っていれば、よく使うものを自然に覚えていきます。</p></li>
+<li><p>Markdownなら生成AIはほぼ完ぺきに正解を教えてくれます</p></li>
+<li><p><a href="https://qiita.com/tbpgr/items/989c6badefff69377da7">必要最低限で覚えておくとよい記法</a></p></li>
+</ul>
+</div>
+<ul>
+<li><p>見出し → これはマスト！</p>
+<ul>
+<li>#の数で指定。文字との間を半角あけるのを忘れない。</li>
+</ul></li>
+<li><p>箇条書き</p>
+<ul>
+<li><p><code>*</code>, <code>+</code>, <code>-</code>のいずれかを入れる。文字との間を半角あけるのを忘れない。</p></li>
+<li><p>半角スペースを2つ前（もしくはtab）に入れると、レベル２を作れる。さらに2ついれると、、、</p></li>
+</ul></li>
+<li><p>強調</p>
+<ul>
+<li><p>*で挟むと斜体</p></li>
+<li><p>**で挟むとBold体</p></li>
+<li><p>***で挟むとどうなるでしょう</p></li>
+</ul></li>
+</ul>
+<section id="lets-実践" class="level3">
+<h3 class="anchored" data-anchor-id="lets-実践">Let’s 実践</h3>
+<ul>
+<li>以下の文章をMarkdownを使って再現してください。</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="名古屋飯といえば" class="level1 infobox">
+<h1>名古屋飯といえば</h1>
+<section id="ひつまぶしhitsumabushi" class="level2">
+<h2 class="anchored" data-anchor-id="ひつまぶしhitsumabushi">ひつまぶし：<em>Hitsumabushi</em></h2>
+<p>おすすめは以下のお店です。</p>
+<ul>
+<li><strong>ひつまぶし花岡</strong>
+<ul>
+<li>場所：栄</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="答え合わせ" class="level3">
+<h3 class="anchored" data-anchor-id="答え合わせ">答え合わせ</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># 名古屋飯といえば</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">## ひつまぶし：*Hitsumabushi*</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>おすすめは以下のお店です。</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**ひつまぶし花岡**</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>場所：栄</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="実はwordのように編集できます" class="level3">
+<h3 class="anchored" data-anchor-id="実はwordのように編集できます">実は、Wordのように編集できます！</h3>
+<ul>
+<li>Markdownで書かなくとも、VisualモードであればWordと似たようにできます。</li>
+<li>以下で設定
+<ul>
+<li>[Tools] → [Global Options…] → [R Markdown] → [Visual]</li>
+<li>“Use visual editor by default for new documents”の項目に☑</li>
+<li>“Soft-wrap R Markdown files”にも☑を入れると、右側にアウトラインが出ます</li>
+</ul></li>
+<li>欠点として、少し動作が遅い。簡単なものはMarkdownで書く方が速い</li>
+<li>表などはVisualモードがおすすめ</li>
+</ul>
+</section>
+<section id="コードチャンクの挿入rの部分" class="level2">
+<h2 class="anchored" data-anchor-id="コードチャンクの挿入rの部分">コードチャンクの挿入（Rの部分）</h2>
+<ul>
+<li><p>ショートカットキー：</p>
+<ul>
+<li><p>Windows: [Ctrl] + [Alt] + [I]</p></li>
+<li><p>MAC: [Command] + [Option] + [I]</p></li>
+</ul></li>
+<li><p>このコードの中はRです。Rで使う関数などを自由に指定できます。</p></li>
+<li><p>以下のチャンク内でないと、動きません。</p></li>
+</ul>
+<p>```{r}<br>
+```</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.666667</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Kisoken_Rmd_202503_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><p>{r}の中にもいろいろな指定ができます。</p>
+<ul>
+<li><code>echo=FALSE</code> : コードを非表示にして結果だけを表示</li>
+</ul></li>
+</ul>
+<p>```{r, echo=FALSE}<br></p>
+<p>dat &lt;- c(1, 4, 6)<br></p>
+<p>mean(dat)<br> ```</p>
+<ul>
+<li><p>チャンクのオプションは沢山あるので、その都度チートシートを参照するとよいです。</p>
+<ul>
+<li><a href="https://rmarkdown.rstudio.com/lesson-15.HTML">チートシート</a></li>
+</ul></li>
+</ul>
+<section id="lets-実践-1" class="level3">
+<h3 class="anchored" data-anchor-id="lets-実践-1">Let’s 実践</h3>
+<ul>
+<li>以下をドキュメントチャンクとコードチャンクを使って再現してください。</li>
+</ul>
+</section>
+</section>
+<section id="食費の合計" class="level2 infobox">
+<h2 class="anchored" data-anchor-id="食費の合計">食費の合計</h2>
+<ul>
+<li><p>以下は、名古屋旅行で使った食費の合計である。</p>
+<ul>
+<li><strong>注!</strong> <em>hitsu</em>はひつまぶし、<em>miso</em>は味噌カツを表す。</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>hitsu <span class="ot">&lt;-</span> <span class="dv">1300</span> <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>miso <span class="ot">&lt;-</span> <span class="dv">1000</span> <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">sum</span>(hitsu, miso)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>total</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4600</code></pre>
+</div>
+</div>
+</section>
+<section id="答え合わせ-1" class="level3">
+<h3 class="anchored" data-anchor-id="答え合わせ-1">答え合わせ</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## 食費の合計</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>以下は、名古屋旅行で使った食費の合計である。</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>**注!** *hitsu*はひつまぶし、*miso*は味噌カツを表す</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="sc">\`</span>``{r}</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>hitsu &lt;- 1300 * 2</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>miso &lt;- 1000 * 2</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>total &lt;- sum(hitsu, miso)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>total</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="sc">\`</span>``</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="r-markdownでまとめた結果を共有することができる" class="level1">
+<h1>2. R Markdownでまとめた結果を共有することができる</h1>
+<section id="lets-実践一緒に" class="level2">
+<h2 class="anchored" data-anchor-id="lets-実践一緒に">Let’s 実践（一緒に）</h2>
+<ul>
+<li>YAMLヘッダーのoutputを変更するだけ！</li>
+</ul>
+<section id="wordに出力" class="level3">
+<h3 class="anchored" data-anchor-id="wordに出力">Wordに出力</h3>
+</section>
+<section id="before" class="level3">
+<h3 class="anchored" data-anchor-id="before">Before</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Untitled"</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_document</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2024-04-15"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="after" class="level3">
+<h3 class="anchored" data-anchor-id="after">After</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Untitled"</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> word_document</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2024-04-15"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>テンプレートを追加することも可能。テンプレートはきちんとレベル分けの設定などを行っておく必要あり<a href="https://gedevan-aleksizde.github.io/rmarkdown-cookbook/word-template.html">（設定の仕方）</a>。</li>
+</ul>
+</section>
+<section id="power-pointに出力" class="level3">
+<h3 class="anchored" data-anchor-id="power-pointに出力">Power Pointに出力</h3>
+<ul>
+<li>図や表は必ず新しいページに表示されるなど、knitした後の修正が面倒。</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Untitled"</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> powerpoint_presentation</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2024-04-15"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="html-slideに変更" class="level3">
+<h3 class="anchored" data-anchor-id="html-slideに変更">HTML slideに変更</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Untitled"</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> ioslides_presentation</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2024-04-15"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p><strong>#</strong>で定義するレベル分けでスライドの区切りが代わる</p>
+<ul>
+<li><strong>#</strong>でスライドのセクション見出し</li>
+<li><strong>##</strong>で新しいページ</li>
+<li><strong>###</strong>ページ内の太文字</li>
+</ul></li>
+<li><p>枠にとらわれない！</p>
+<ul>
+<li>以下のチャンクを先頭に入れると、スクロール可能なスライドになる（チャンク内はrではなく、<code>=html</code>にする）。</li>
+<li>注意点として、タッチパッドや、マウスホイールでスクロールできますが、スクロールバーを掴んでスクロールはできません。</li>
+</ul></li>
+</ul>
+<p>```{=html}<br>
+&lt;style&gt; <br> slides &gt; slide { <br> overflow-x: auto !important; <br> overflow-y: auto !important; <br> } <br> &lt;/style&gt; <br> ```</p>
+</section>
+</section>
+<section id="html形式だと簡単にウェブサイトにできます" class="level2">
+<h2 class="anchored" data-anchor-id="html形式だと簡単にウェブサイトにできます">HTML形式だと、簡単にウェブサイトにできます</h2>
+<ul>
+<li>リンクで他者に共有できます。</li>
+<li>以下の二つは無料で利用できるが、無料版の場合、リンクを知る人だれもが閲覧できるので注意</li>
+</ul>
+<section id="rpubsを使う" class="level3">
+<h3 class="anchored" data-anchor-id="rpubsを使う">RPubsを使う</h3>
+<ul>
+<li>コメント機能もあるので、「発表へのコメントは匿名でこちらへ」みたいにできそう。</li>
+<li><a href="https://qiita.com/masato-terai/items/664c5ee782f690260eca#rpubs%E4%B8%80%E7%95%AA%E7%B0%A1%E5%8D%98">使い方の解説</a></li>
+</ul>
+</section>
+<section id="githubを使う" class="level3">
+<h3 class="anchored" data-anchor-id="githubを使う">Githubを使う</h3>
+<ul>
+<li><p>Githubとは、コードのバージョン管理をするツール。共同編集可能。</p></li>
+<li><p>作成したHTMLファイルのファイル名を<code>index.html</code>にしてアップロードし、Pageで公開設定をすればウェブサイトとして公開できます。</p>
+<ul>
+<li>こちらもリンクを相手に共有すればいいので便利です</li>
+</ul></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="おまけ" class="level1">
+<h1>おまけ</h1>
+<section id="r-markdownに含めておくとよい情報" class="level2">
+<h2 class="anchored" data-anchor-id="r-markdownに含めておくとよい情報">R Markdownに含めておくとよい情報</h2>
+<section id="rのバージョン-使用したrのパッケージのバージョン" class="level3">
+<h3 class="anchored" data-anchor-id="rのバージョン-使用したrのパッケージのバージョン">Rのバージョン &amp; 使用したRのパッケージのバージョン</h3>
+<ul>
+<li><p>Rやパッケージは不定期に更新され続ける</p>
+<ul>
+<li>Rやパッケージのバージョンが違うと上手く動かないこともある。その場合、Rやパッケージのバージョンが明記されていれば、問題解決のヒントになったりする。</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 以下の一行だけでOK</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.3.2 (2023-10-31 ucrt)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 11 x64 (build 22621)
+
+Matrix products: default
+
+
+locale:
+[1] LC_COLLATE=Japanese_Japan.utf8  LC_CTYPE=Japanese_Japan.utf8   
+[3] LC_MONETARY=Japanese_Japan.utf8 LC_NUMERIC=C                   
+[5] LC_TIME=Japanese_Japan.utf8    
+
+time zone: Asia/Tokyo
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] htmlwidgets_1.6.4 compiler_4.3.2    fastmap_1.2.0     cli_3.6.1        
+ [5] tools_4.3.2       htmltools_0.5.8.1 rstudioapi_0.17.1 yaml_2.3.10      
+ [9] rmarkdown_2.29    knitr_1.49        jsonlite_1.8.9    xfun_0.49        
+[13] digest_0.6.33     rlang_1.1.2       evaluate_1.0.3   </code></pre>
+</div>
+</div>
+</section>
+<section id="日付日時" class="level3">
+<h3 class="anchored" data-anchor-id="日付日時">日付、日時</h3>
+<ul>
+<li><p>いつ作成されたファイルで、最後に更新されたのがいつかを示す（基本ウェブサイトはそうしてある）</p>
+<ul>
+<li><p>標準設定では、ファイルの作成日を手動で変更する必要がある</p>
+<ul>
+<li>変更し忘れたら困る</li>
+</ul></li>
+</ul></li>
+<li><p>r Sys.Date：2022-01-20</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Untitled"</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Masato Terai"</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "`r Sys.Date()` in JST"   # ``と""で囲うのを忘れない。</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_document</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>r Sys.time：2022-01-20 21:36:36</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Untitled"</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Masato Terai"</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "`r format(Sys.time(), '%Y-%m-%d %X')`"   # ``と""で囲うのを忘れない。</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_document</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>寺井おすすめ</p>
+<ul>
+<li>JSTはJapan Standard Time（日本標準時）の略</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Untitled"</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Masato Terai"</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "作成日:2024-05-20, 最終更新(JST): `r format(Sys.time(), '%Y-%m-%d %X')`"</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_document</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="処理にかかった時間" class="level3">
+<h3 class="anchored" data-anchor-id="処理にかかった時間">処理にかかった時間</h3>
+<ul>
+<li>時間のかかる分析を行う人は明記する方が親切！
+<ul>
+<li>いつ終わるのか分からない見通しのつかない分析を実行するのは怖いです。コア数に加え処理にかかった時間が記載されていればおおよその見通しがつきます。</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("tictoc") # 入れていないかたは先にインストールしてください</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tictoc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tictoc' was built under R version 4.3.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>() <span class="co">#測定開始</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>I <span class="ot">&lt;-</span><span class="cn">NULL</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100000</span>){</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  I <span class="ot">&lt;-</span> <span class="fu">c</span>(I,  i)}</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>() <span class="co">#測定終了</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>4.84 sec elapsed</code></pre>
+</div>
+</div>
+</section>
+<section id="パソコンの性能など" class="level3">
+<h3 class="anchored" data-anchor-id="パソコンの性能など">パソコンの性能など</h3>
+<ul>
+<li><p>パソコンの性能で処理の実行時間はかなり変わります。一つ前のセクションで紹介した内容は、このパソコンのスペックの情報と合わせて参考にします。</p></li>
+<li><p>CPUとコア数とRAM</p>
+<ul>
+<li>CPU</li>
+<li>コア数（論理コア）
+<ul>
+<li>「論理コア」は「スレッド」「論理プロセッサ」、「仮想コア」とも呼ばれる</li>
+<li><a href="https://wa3.i-3-i.info/diff735core.html">CPUとコアについて</a></li>
+</ul></li>
+<li>RAM (Random Access Memory)
+<ul>
+<li>ストレージ（SSDやHDD）ではなく、データを一時保存する場所</li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("benchmarkme") # 入れていないかたは先にインストールしてください</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>benchmarkme<span class="sc">::</span><span class="fu">get_cpu</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$vendor_id
+[1] "GenuineIntel"
+
+$model_name
+[1] "13th Gen Intel(R) Core(TM) i9-13900K"
+
+$no_of_cores
+[1] 32</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>benchmarkme<span class="sc">::</span><span class="fu">get_ram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>137 GB</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="プログラム言語は無料の有益な情報が沢山あります" class="level2">
+<h2 class="anchored" data-anchor-id="プログラム言語は無料の有益な情報が沢山あります">プログラム言語は無料の有益な情報が沢山あります</h2>
+<ul>
+<li><p><a href="https://qiita.com/masato-terai/items/f73cfa50fafcaf5d6f93">無料で学ぶRと統計解析：おすすめのウェブサイト</a></p>
+<ul>
+<li>Rに関する無料のウェブサイトをリストにしています。新しいものを見つけ次第その都度更新しています。</li>
+</ul></li>
+<li><p>キソケンも<strong>無料</strong>の勉強会です！</p>
+<ul>
+<li><p>複数人で相談し合う場はとても貴重です！</p></li>
+<li><p>ぜひご参加ください！</p></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="参考文献-資料" class="level1">
+<h1>参考文献 &amp; 資料</h1>
+<section id="書籍ウェブサイトの記事" class="level2">
+<h2 class="anchored" data-anchor-id="書籍ウェブサイトの記事">📚：書籍、💻：ウェブサイトの記事</h2>
+<ul>
+<li><p><a href="https://wa3.i-3-i.info/diff735core.html">💻「物理コア」と「論理コア」の違い</a></p></li>
+<li><p><a href="https://www.amazon.co.jp/R%E3%81%8C%E7%94%9F%E7%94%A3%E6%80%A7%E3%82%92%E9%AB%98%E3%82%81%E3%82%8B%E3%80%9C%E3%83%87%E3%83%BC%E3%82%BF%E5%88%86%E6%9E%90%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%95%E3%83%AD%E3%83%BC%E5%8A%B9%E7%8E%87%E5%8C%96%E3%81%AE%E5%AE%9F%E8%B7%B5-igjit/dp/4297125242">📚Rが生産性を高める データ分析ワークフロー効率化の実践</a></p></li>
+<li><p><a href="https://www.amazon.co.jp/%E5%86%8D%E7%8F%BE%E5%8F%AF%E8%83%BD%E6%80%A7%E3%81%AE%E3%81%99%E3%82%9D%E3%82%81-Wonderful-R-%E7%9F%B3%E7%94%B0-%E5%9F%BA%E5%BA%83/dp/4320112431">📚再現可能性のすすめ：RStudioによるデータ解析とレポート作成</a></p></li>
+<li><p><a href="https://www.jaysong.net/RBook/renv.html">💻私たちのR</a></p></li>
+<li><p><a href="https://qiita.com/xuwenzhen/items/b01f78525626b3e87d23">💻YAMLについての基本知識</a></p></li>
+<li><p><a href="https://qiita.com/masato-terai/items/664c5ee782f690260eca">💻R Markdownでスライドを作成（ioslides）</a></p></li>
+<li><p><a href="https://gedevan-aleksizde.github.io/rmarkdown-cookbook/">💻R Markdown クックブック</a></p></li>
+<li><p><a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf">💻R Markdown Cheat Sheet</a></p></li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+<script src="Kisoken_Rmd_202503_files/libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
